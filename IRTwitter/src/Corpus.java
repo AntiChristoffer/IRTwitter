@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Collections;
 
 /**
  * Corpus containing several ngram collections
