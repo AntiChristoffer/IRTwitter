@@ -14,13 +14,14 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String fileToRead = "C:/Users/Sebbe/Documents/GitHub/IRTwitter/IRTwitter/data/testdata.mini.csv";
+		String fileToRead = "../data/testdata.mini.csv";
 
 		Parser parser = new Parser(fileToRead);
 		parser.parseFile();
-		
+
 		HashMap<String, LinkedList<NGram>> tri = parser.getNGrams(3);
 		HashMap<String, LinkedList<NGram>> bi = parser.getNGrams(2);
+
 		Iterator<String> bit = bi.keySet().iterator();
 		while(bit.hasNext()){
 			LinkedList<NGram> tempList = bi.get(bit.next());
@@ -30,7 +31,7 @@ public class Main {
 			}
 			System.out.println("]");
 		}
-		
+
 		Corpus c = new Corpus();
 		c.addBigrams(bi);
 		c.addTrigrams(tri);
