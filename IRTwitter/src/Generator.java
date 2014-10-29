@@ -24,10 +24,10 @@ public class Generator {
 		Iterator<String> listIt = corpus.bigrams.keySet().iterator();
 		start = listIt.next();
 		String first = "";
-		String second = start;
+		String second = corpus.getRandomStartWord()+"$";
 		int andCount = 0;
 		boolean looping = true;
-		
+
 		while(sb.length() < MAX_LENGTH && looping){
 			if(corpus.trigrams.containsKey(first+second)){
 				ngrams = corpus.trigrams.get(first+second);
@@ -35,12 +35,12 @@ public class Generator {
 			else{
 				ngrams = corpus.bigrams.get(second);
 			}
-			
+
 			int switchval = 0;
 			if(ngrams != null){
 				switchval = 1;
 			}
-			
+
 			switch(switchval){
 				case 1:{
 					first = second;

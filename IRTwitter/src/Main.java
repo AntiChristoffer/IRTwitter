@@ -14,14 +14,16 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String fileToRead = "../data/testdata.mini.csv";
+		String fileToRead = "../data/testdata.manual.2009.06.14.csv";
 
-		Parser parser = new Parser(fileToRead);
-		parser.parseFile();
 
-		HashMap<String, LinkedList<NGram>> tri = parser.getNGrams(3);
-		HashMap<String, LinkedList<NGram>> bi = parser.getNGrams(2);
+		Corpus c = new Corpus(new Parser(fileToRead));
+		Generator g = new Generator(c);
 
+		g.createSentence("No$");
+
+
+		/**
 		Iterator<String> bit = bi.keySet().iterator();
 		while(bit.hasNext()){
 			LinkedList<NGram> tempList = bi.get(bit.next());
@@ -31,12 +33,7 @@ public class Main {
 			}
 			System.out.println("]");
 		}
-
-		Corpus c = new Corpus();
-		c.addBigrams(bi);
-		c.addTrigrams(tri);
-		Generator g = new Generator(c);
-		g.createSentence("No$");
+		*/
 	}
 
 }

@@ -22,9 +22,12 @@ public class Parser {
 
 	private LinkedList<String[]> sentences;
 	private String filePath;
+	private String[] userNames;
+
 
 	public Parser(String inputFile) throws IOException{
 		filePath = inputFile;
+		parseFile();
 	}
 
 	/** */
@@ -53,34 +56,11 @@ public class Parser {
 					start=end;
 					end=sentenceIterator.next();
 				}
-
 			}
 			br.close();
 		} catch(FileNotFoundException e){
 			System.out.println("Exception! " + e);
 		}
-	}
-
-
-	/**
-	 * Prints sentences to file
-	 */
-	public void printToFile(){
-
-	}
-
-	public void debugPrint(){
-		System.out.println("Sentences:");
-		Iterator<String[]> it = sentences.iterator();
-		while(it.hasNext()){
-			String[] sentence = it.next();
-			for(int i = 0; i < sentence.length; i++){
-				System.out.print(sentence[i]);
-				System.out.print(" ");
-			}
-			System.out.println();
-		}
-
 	}
 
 	public HashMap<String, LinkedList<NGram>> getNGrams(int order){
@@ -113,13 +93,39 @@ public class Parser {
 				}
 			}
 		}
-
 		//Sort lists on weights
 		Iterator<String> listIt = nGrams.keySet().iterator();
 		while(listIt.hasNext()){
 			Collections.sort(nGrams.get(listIt.next()));
 		}
-
 		return nGrams;
+	}
+
+	public String[] getStartWords(){
+		String[] sw = new String[sentences.size()];
+		Iterator<String[]> it = sentences.iterator();
+		int index = 0;
+		while(it.hasNext()){//For each sentence
+			String[] sentence = it.next();
+			sw[index++] = sentence[0];
+		}
+		return sw;
+	}
+
+	public String[] getUserNames(){
+		return userNames;
+	}
+
+	public void debugPrint(){
+		System.out.println("Sentences:");
+		Iterator<String[]> it = sentences.iterator();
+		while(it.hasNext()){
+			String[] sentence = it.next();
+			for(int i = 0; i < sentence.length; i++){
+				System.out.print(sentence[i]);
+				System.out.print(" ");
+			}
+			System.out.println();
+		}
 	}
 }
