@@ -20,14 +20,15 @@ public class Generator {
 		LinkedList<NGram> ngrams = new LinkedList<NGram>();
 		while(sb.length() < MAX_LENGTH){
 			//until comparable is done loop to get highest weight
-			if(corpus.trigrams.get(start) != null){
+			/*if(corpus.trigrams.get(start) != null){
 				ngrams = corpus.trigrams.get(start);
 			}
-			else{
+			else{*/
 				ngrams = corpus.bigrams.get(start);
-			}
-			int bestWeight = ngrams.getFirst().getWeight();
-			String bestWord = ngrams.getFirst().getNext();
+			//}
+			System.out.println(ngrams.size());
+			int bestWeight = ngrams.getLast().getWeight();
+			String bestWord = ngrams.getLast().getNext();
 			for(NGram ng : ngrams){
 				if(ng.getWeight() > bestWeight){
 					bestWeight = ng.getWeight();
