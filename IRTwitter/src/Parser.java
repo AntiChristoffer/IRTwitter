@@ -5,8 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.text.BreakIterator;
+import java.util.HashMap;
 import java.util.Arrays;
+import java.text.BreakIterator;
 
 /**
  *
@@ -79,8 +80,8 @@ public class Parser {
 
 	}
 
-	public LinkedList<NGram> getNGrams(int order){
-		LinkedList<NGram> nGrams = new LinkedList<NGram>();
+	public HashMap<String, LinkedList<NGram>> getNGrams(int order){
+		HashMap<String, NGram> nGrams = new HashMap<String, LinkedList<NGram>>();
 		Iterator<String[]> it = sentences.iterator();
 		while(it.hasNext()){//For each sentence
 			String[] sentence = it.next();

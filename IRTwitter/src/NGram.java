@@ -4,7 +4,7 @@
  * @author tryti
  * @version 2014-10-27
  */
-public class NGram {
+public class NGram implements Comparable<NGram>{
 	private final static String KEYSEPATOR = "$";
 
 	private String[] words;
@@ -38,6 +38,16 @@ public class NGram {
 		}
 		key = sb.toString();
 	}
+
+	/**
+	 * Compares this NGram's weight with another NGram's weight
+	 */
+	public in compareTo(NGram other){
+		if(weight > other.getWeight()) return 1;
+		else if(weight < other.getWeight()) return -1;
+		else return 0;
+	}
+
 
 	public String toString(){
 		return "key: "+getKey()+", next: "+getNext()+", weight: "+weight;

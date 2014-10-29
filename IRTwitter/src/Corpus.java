@@ -4,23 +4,27 @@ import java.util.LinkedList;
 /**
  * Corpus containing several ngram collections
  * @author Tryti
- * @version 2014-10-27 
+ * @version 2014-10-27
  */
 public class Corpus {
+	private LinkedList<String> userNames;
 	private HashMap<String, LinkedList<NGram>> bigram;
 	private HashMap<String, LinkedList<NGram>> trigram;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public Corpus() {
 		bigram = new HashMap<String, LinkedList<NGram>>();
 		trigram = new HashMap<String, LinkedList<NGram>>();
 	}
-	
+
+	public void addUserNames(LinkedList<String> newUserNames){
+		userNames = newUserNames;
+	}
+
 	/**
-	 * 
-	 * 
+	 *
 	 */
 	public void addBigrams(LinkedList<NGram> newBigrams){
 		for(NGram n: newBigrams){
@@ -30,10 +34,9 @@ public class Corpus {
 			bigram.get(n.getKey()).addLast(n);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * 
+	 *
 	 */
 	public void addTrigrams(LinkedList<NGram> newTrigrams){
 		for(NGram n: newTrigrams) {

@@ -17,19 +17,5 @@ public class Main {
 
 		Parser parser = new Parser(fileToRead);
 		parser.parseFile();
-
-		System.out.println("BIGRAMS");
-		LinkedList<NGram> bigrams = parser.getNGrams(2);
-		for(NGram n: bigrams){
-			System.out.println(n);
-		}
-
-		System.out.println("TRIGRAMS");
-		LinkedList<NGram> trigrams = parser.getNGrams(3);
-		for(NGram n: trigrams){
-			System.out.println(n);
-		}
-		//parser.debugPrint();
 	}
-
 }
