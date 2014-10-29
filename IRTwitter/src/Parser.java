@@ -95,38 +95,4 @@ public class Parser {
 		}
 		return nGrams;
 	}
-
-	/** */
-	public void nGramSplitter(String fileToRead, String fileToWrite, int orderGram) throws IOException{
-		try{
-			BufferedReader br = new BufferedReader(new FileReader(fileToRead));
-			FileWriter out = new FileWriter(fileToWrite);
-			String tempString = br.readLine();
-			while(tempString != null){
-				tempString = tempString.replaceAll("[.]{2,}|[,]", "");
-				String[] tempStringArray = tempString.split("\\s{1,}");
-				for(int i = 0; i<tempStringArray.length; i++){
-					System.out.println(tempStringArray[i]);
-					String tempGram = "";
-					for(int j = 0; j<orderGram;j++){
-						if(i+j < tempStringArray.length){
-							tempGram += tempStringArray[i+j] + " ";
-							System.out.println("Inne i while loop");
-							if(tempStringArray[i+j].endsWith(".")){
-								break;
-							}
-						}
-					}
-					out.write(tempGram);
-					out.write("\n");
-				}
-				tempString = br.readLine();
-			}
-			br.close();
-			out.close();
-
-		} catch(FileNotFoundException e){
-			System.out.println("Exception! " + e);
-		}
-	}
 }
