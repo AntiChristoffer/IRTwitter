@@ -14,9 +14,9 @@ import java.text.BreakIterator;
  * @version 2014-10-27
  */
 public class Parser {
-	private final static String REGEX_SENTENCE = "/(?<=[.?!])\\S+(?=[a-z])/i";
+	private final static String REGEX_SENTENCE_SPLIT = "\\s+";
 
-	private LinkedList<ArrayList<String>> sentences;
+	private LinkedList<String[]> sentences;
 	private String filePath;
 
 	public Parser(String inputFile) throws IOException{
@@ -28,7 +28,7 @@ public class Parser {
 		try{
 			BufferedReader br = new BufferedReader(new FileReader(filePath));
 			LinkedList<String> messages = new LinkedList<String>();
-			sentences = new LinkedList<ArrayList<String>>();
+			sentences = new LinkedList<String[]>();
 
 			//Push each massage to messages
 			String tempString = br.readLine();
@@ -45,7 +45,7 @@ public class Parser {
 				int start = sentenceIterator.first();
 				int end = sentenceIterator.next();
 				while(end != BreakIterator.DONE){
-					System.out.println(message.substring(start,end));
+					sentences.add(message.substring(start,end).split(REGEX_SENTENCE_SPLIT));
 					start=end;
 					end=sentenceIterator.next();
 				}
@@ -65,12 +65,26 @@ public class Parser {
 
 	}
 
+	public void debugPrint(){
+		System.out.println("Sentences:");
+		Iterator<String[]> it = sentences.iterator();
+		while(it.hasNext()){
+			String[] sentence = it.next();
+			for(int i = 0; i < sentence.length; i++){
+				System.out.print(sentence[i]);
+				System.out.print(" ");
+			}
+			System.out.println();
+		}
+
+	}
+
 	public LinkedList<NGram> getNGrams(int order){
 		LinkedList<NGram> nGrams = new LinkedList<NGram>();
-		Iterator<ArrayList<String>> it = sentences.iterator();
+		Iterator<String[]> it = sentences.iterator();
 		while(it.hasNext()){
-			ArrayList<String> sentence = it.next();
-			for(int i = 0; i < sentence.size()-order; i++){
+			String[] sentence = it.next();
+			for(int i = 0; i < sentence.length; i++){
 
 			}
 		}

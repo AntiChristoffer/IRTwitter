@@ -12,10 +12,11 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String fileToRead = "data/testdata-mini.csv";		
+		String fileToRead = "../data/testdata.mini.csv";
 
 		Parser parser = new Parser(fileToRead);
 		parser.parseFile();
+		parser.debugPrint();
 	}
 
 }
