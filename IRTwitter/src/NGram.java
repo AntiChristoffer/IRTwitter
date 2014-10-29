@@ -42,7 +42,7 @@ public class NGram implements Comparable<NGram>{
 	/**
 	 * Compares this NGram's weight with another NGram's weight
 	 */
-	public in compareTo(NGram other){
+	public int compareTo(NGram other){
 		if(weight > other.getWeight()) return 1;
 		else if(weight < other.getWeight()) return -1;
 		else return 0;

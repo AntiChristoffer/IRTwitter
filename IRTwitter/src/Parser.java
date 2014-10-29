@@ -81,16 +81,32 @@ public class Parser {
 	}
 
 	public HashMap<String, LinkedList<NGram>> getNGrams(int order){
-		HashMap<String, NGram> nGrams = new HashMap<String, LinkedList<NGram>>();
+		HashMap<String, LinkedList<NGram>> nGrams = new HashMap<String, LinkedList<NGram>>();
 		Iterator<String[]> it = sentences.iterator();
 		while(it.hasNext()){//For each sentence
 			String[] sentence = it.next();
 			if(sentence.length > order + 1){//If sentence long enough for order
 				for(int i = 0; i < sentence.length-1-order; i++){//Create nGrams
 					String[] subSentence = Arrays.copyOfRange(sentence, i, i+order);
-					//TODO handle subSentence
 					NGram nGram = new NGram(subSentence);
-					nGrams.add(nGram);
+					LinkedList<NGram> list = nGrams.get(nGram.getKey());
+					if(list != null){
+						boolean found = false;
+						for(NGram n: list){
+							if(n.getNext().equals(nGram.getNext())){
+								n.incWeight();
+								found = true;
+								break;
+							}
+						}
+						if(!found){
+							list.add(nGram);
+						}
+					}else{
+						LinkedList<NGram> newList = new LinkedList<NGram>();
+						newList.add(nGram);
+						nGrams.put(nGram.getKey(), newList);
+					}
 				}
 			}
 		}

@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.LinkedList;
-
+import java.util.Iterator;
+import java.util.HashMap;
 /**
  *
  * @author Tryti
@@ -17,5 +18,17 @@ public class Main {
 
 		Parser parser = new Parser(fileToRead);
 		parser.parseFile();
+
+		HashMap<String, LinkedList<NGram>> bi = parser.getNGrams(2);
+		Iterator<String> bit = bi.keySet().iterator();
+		while(bit.hasNext()){
+			LinkedList<NGram> tempList = bi.get(bit.next());
+			System.out.print("Key: "+tempList.getFirst().getKey() + ", [");
+			for(NGram n: tempList){
+				System.out.print("{Next: " + n.getNext() + ", weight: "+ n.getWeight()+"}, ");
+			}
+			System.out.println("]");
+		}
 	}
+
 }

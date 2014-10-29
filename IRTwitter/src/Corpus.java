@@ -8,15 +8,15 @@ import java.util.LinkedList;
  */
 public class Corpus {
 	private LinkedList<String> userNames;
-	private HashMap<String, LinkedList<NGram>> bigram;
-	private HashMap<String, LinkedList<NGram>> trigram;
+	public HashMap<String, LinkedList<NGram>> bigrams;
+	public HashMap<String, LinkedList<NGram>> trigrams;
 
 	/**
 	 *
 	 */
 	public Corpus() {
-		bigram = new HashMap<String, LinkedList<NGram>>();
-		trigram = new HashMap<String, LinkedList<NGram>>();
+		bigrams = new HashMap<String, LinkedList<NGram>>();
+		trigrams = new HashMap<String, LinkedList<NGram>>();
 	}
 
 	public void addUserNames(LinkedList<String> newUserNames){
@@ -26,24 +26,14 @@ public class Corpus {
 	/**
 	 *
 	 */
-	public void addBigrams(LinkedList<NGram> newBigrams){
-		for(NGram n: newBigrams){
-			if(bigram.get(n.getKey()) == null){
-				bigram.put(n.getKey(), new LinkedList<NGram>());
-			}
-			bigram.get(n.getKey()).addLast(n);
-		}
+	public void addBigrams(HashMap<String, LinkedList<NGram>> newBigrams){
+		bigrams = newBigrams;
 	}
 
 	/**
 	 *
 	 */
-	public void addTrigrams(LinkedList<NGram> newTrigrams){
-		for(NGram n: newTrigrams) {
-			if(trigram.get(n.getKey()) == null){
-				trigram.put(n.getKey(), new LinkedList<NGram>());
-			}
-			trigram.get(n.getKey()).addLast(n);
-		}
+	public void addTrigrams(HashMap<String, LinkedList<NGram>> newTrigrams){
+		trigrams = newTrigrams;
 	}
 }

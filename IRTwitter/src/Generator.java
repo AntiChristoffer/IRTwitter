@@ -9,22 +9,22 @@ public class Generator {
 	private Corpus corpus;
 	private StringBuilder sb;
 
-	
+
 	public Generator(Corpus c){
 		corpus = c;
 		sb = new StringBuilder();
 	}
-	
+
 	public void createSentence(String start){
 		sb.append(start+" ");
 		LinkedList<NGram> ngrams = new LinkedList<NGram>();
 		while(sb.length() < MAX_LENGTH){
 			//until comparable is done loop to get highest weight
-			if(corpus.trigram.get(start) != null){
-				ngrams = corpus.trigram.get(start);
+			if(corpus.trigrams.get(start) != null){
+				ngrams = corpus.trigrams.get(start);
 			}
 			else{
-				ngrams = corpus.bigram.get(start);
+				ngrams = corpus.bigrams.get(start);
 			}
 			int bestWeight = ngrams.getFirst().getWeight();
 			String bestWord = ngrams.getFirst().getNext();
@@ -34,12 +34,12 @@ public class Generator {
 					bestWord = ng.getNext();
 				}
 			}
-			
+
 			sb.append(bestWord+" ");
 			start = bestWord;
 		}
 		System.out.println(sb.toString());
 	}
-	
-	
+
+
 }
