@@ -19,15 +19,26 @@ public class Generator {
 	public void createSentence(String start){
 		sb.setLength(0);
 		LinkedList<NGram> ngrams = new LinkedList<NGram>();
+
 		Iterator<String> listIt = corpus.bigrams.keySet().iterator();
 		start = listIt.next();
+		String first = "";
+		String second = start;
+		
 		while(sb.length() < MAX_LENGTH){
-			ngrams = corpus.bigrams.get(start);
+			if(corpus.trigrams.containsKey(first+second)){
+				ngrams = corpus.trigrams.get(first+second);
+			}
+			else{
+				ngrams = corpus.bigrams.get(second);
+			}
+			
 			if(ngrams == null){
 				break;
 			}else{
+				first = second;
 				NGram ngram = ngrams.getLast();
-				start = ngram.getNext() + "$";
+				second = ngram.getNext() + "$";
 				sb.append(ngram.getNext() +  " ");
 			}
 
