@@ -3,10 +3,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.text.BreakIterator;
+import java.util.Arrays;
 
 /**
  *
@@ -82,14 +82,17 @@ public class Parser {
 	public LinkedList<NGram> getNGrams(int order){
 		LinkedList<NGram> nGrams = new LinkedList<NGram>();
 		Iterator<String[]> it = sentences.iterator();
-		while(it.hasNext()){
+		while(it.hasNext()){//For each sentence
 			String[] sentence = it.next();
-			for(int i = 0; i < sentence.length; i++){
-
+			if(sentence.length > order + 1){//If sentence long enough for order
+				for(int i = 0; i < sentence.length-1-order; i++){//Create nGrams
+					String[] subSentence = Arrays.copyOfRange(sentence, i, i+order);
+					//TODO handle subSentence
+					NGram nGram = new NGram(subSentence);
+					nGrams.add(nGram);
+				}
 			}
 		}
-
-
 		return nGrams;
 	}
 
