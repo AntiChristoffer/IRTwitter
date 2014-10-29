@@ -7,6 +7,7 @@ import java.util.Iterator;
  */
 public class Generator {
 	private final int MAX_LENGTH = 140;
+	private final int MINCHAR = 50;
 	private Corpus corpus;
 	private StringBuilder sb;
 
@@ -24,8 +25,10 @@ public class Generator {
 		start = listIt.next();
 		String first = "";
 		String second = start;
+		int andCount = 0;
+		boolean looping = true;
 		
-		while(sb.length() < MAX_LENGTH){
+		while(sb.length() < MAX_LENGTH && looping){
 			if(corpus.trigrams.containsKey(first+second)){
 				ngrams = corpus.trigrams.get(first+second);
 			}
@@ -33,15 +36,34 @@ public class Generator {
 				ngrams = corpus.bigrams.get(second);
 			}
 			
-			if(ngrams == null){
-				break;
-			}else{
-				first = second;
-				NGram ngram = ngrams.getLast();
-				second = ngram.getNext() + "$";
-				sb.append(ngram.getNext() +  " ");
+			int switchval = 0;
+			if(ngrams != null){
+				switchval = 1;
 			}
-
+			
+			switch(switchval){
+				case 1:{
+					first = second;
+					NGram ngram = ngrams.getLast();
+					second = ngram.getNext() + "$";
+					if(second.equals("and$")){
+						andCount++;
+					}
+					if(andCount < 2){
+						sb.append(ngram.getNext() +  " ");
+						break;
+					}
+				}
+				default:{
+					andCount = 0;
+					sb.setCharAt(sb.length()-1, '.');
+					sb.append(" ");
+					if((MAX_LENGTH - sb.length()) > MINCHAR){
+						first = null;
+						second = listIt.next(); //TODO second = one of valid startwords
+					}else looping = false;
+				}
+			}
 
 		}
 		System.out.println(sb.toString());
