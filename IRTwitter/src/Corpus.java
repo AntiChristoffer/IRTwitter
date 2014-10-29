@@ -10,6 +10,9 @@ public class Corpus {
 	private HashMap<String, LinkedList<NGram>> bigram;
 	private HashMap<String, LinkedList<NGram>> trigram;
 	
+	/**
+	 * 
+	 */
 	public Corpus() {
 		bigram = new HashMap<String, LinkedList<NGram>>();
 		trigram = new HashMap<String, LinkedList<NGram>>();
