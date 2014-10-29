@@ -17,17 +17,21 @@ public class Generator {
 	}
 
 	public void createSentence(String start){
-		sb.append(start+" ");
+		sb.setLength(0);
 		LinkedList<NGram> ngrams = new LinkedList<NGram>();
+		Iterator<String> listIt = corpus.bigrams.keySet().iterator();
+		start = listIt.next();
 		while(sb.length() < MAX_LENGTH){
-			Iterator<String> listIt = corpus.bigrams.keySet().iterator();
-			ngrams = corpus.bigrams.get(listIt.next());
-			System.out.println(ngrams.size());
-			int bestWeight = ngrams.getLast().getWeight();
-			String bestWord = ngrams.getLast().getNext();
+			ngrams = corpus.bigrams.get(start);
+			if(ngrams == null){
+				break;
+			}else{
+				NGram ngram = ngrams.getLast();
+				start = ngram.getNext() + "$";
+				sb.append(ngram.getNext() +  " ");
+			}
 
-			sb.append(bestWord+" ");
-			start = bestWord;
+
 		}
 		System.out.println(sb.toString());
 	}
