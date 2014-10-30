@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * @author segrahn
@@ -10,11 +11,13 @@ public class Generator {
 	private final int MINCHAR = 50;
 	private Corpus corpus;
 	private StringBuilder sb;
+	private Random rnd;
 
 
 	public Generator(Corpus c){
 		corpus = c;
 		sb = new StringBuilder();
+		rnd = new Random();
 	}
 
 	public String createSentence(){
@@ -42,8 +45,13 @@ public class Generator {
 
 			switch(switchval){
 				case 1:{
+					NGram ngram;
 					first = second;
-					NGram ngram = ngrams.getLast();
+					if(ngrams.size() > 3){
+						int index = rnd.nextInt(3);
+						ngram = ngrams.get(index);
+					}else ngram = ngrams.getFirst();
+					
 					second = ngram.getNext() + "$";
 					if(second.equals("and$")){
 						andCount++;
@@ -55,7 +63,8 @@ public class Generator {
 				}
 				default:{
 					andCount = 0;
-					sb.setCharAt(sb.length()-1, '.');
+					int sbl = sb.length()-1;
+					if(sbl > 0) sb.setCharAt(sbl, '.');
 					sb.append(" ");
 					if((MAX_LENGTH - sb.length()) > MINCHAR){
 						first = null;
