@@ -113,7 +113,9 @@ public class Parser {
 		int index = 0;
 		while(it.hasNext()){//For each sentence
 			String[] sentence = it.next();
-			sw[index++] = sentence[0];
+			if(sentence.length > 0){
+				sw[index++] = sentence[0];
+			}
 		}
 		return sw;
 	}
