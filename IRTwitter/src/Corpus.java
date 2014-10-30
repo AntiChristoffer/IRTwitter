@@ -11,6 +11,7 @@ public class Corpus {
 	private String[] startWords;
 	public HashMap<String, LinkedList<NGram>> bigrams;
 	public HashMap<String, LinkedList<NGram>> trigrams;
+	public HashMap<String, LinkedList<NGram>> quadgrams;
 
 	/**
 	 *
@@ -18,6 +19,7 @@ public class Corpus {
 	public Corpus(Parser p) {
 		bigrams = p.getNGrams(2);
 		trigrams = p.getNGrams(3);
+		quadgrams = p.getNGrams(4);
 		userNames = p.getUserNames();
 		startWords = p.getStartWords();
 	}

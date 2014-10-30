@@ -7,7 +7,7 @@ import java.util.Random;
  * @version 2014-10-29
  */
 public class Generator {
-	private final int MAX_LENGTH = 140;
+	private final int MAX_LENGTH = 100;
 	private final int MINCHAR = 50;
 	private Corpus corpus;
 	private StringBuilder sb;
@@ -26,16 +26,21 @@ public class Generator {
 		//Iterator<String> listIt = corpus.bigrams.keySet().iterator();
 		//start = listIt.next();
 		String first = "";
-		String second = corpus.getRandomStartWord()+"$";
+		String second = "";
+		String third = corpus.getRandomStartWord()+"$";
+		
 		int andCount = 0;
 		boolean looping = true;
 
 		while(sb.length() < MAX_LENGTH && looping){
-			if(corpus.trigrams.containsKey(first+second)){
-				ngrams = corpus.trigrams.get(first+second);
+			if(corpus.quadgrams.containsKey(first+second+third)){
+				ngrams = corpus.quadgrams.get(first+second+third);
+			}
+			else if(corpus.trigrams.containsKey(second+third)){
+				ngrams = corpus.trigrams.get(second+third);
 			}
 			else{
-				ngrams = corpus.bigrams.get(second);
+				ngrams = corpus.bigrams.get(third);
 			}
 
 			int switchval = 0;
@@ -47,13 +52,14 @@ public class Generator {
 				case 1:{
 					NGram ngram;
 					first = second;
+					second = third;
 					if(ngrams.size() > 3){
 						int index = rnd.nextInt(3);
 						ngram = ngrams.get(index);
 					}else ngram = ngrams.getFirst();
 					
-					second = ngram.getNext() + "$";
-					if(second.equals("and$")){
+					third = ngram.getNext() + "$";
+					if(third.equals("and$")){
 						andCount++;
 					}
 					if(andCount < 2){
@@ -67,8 +73,9 @@ public class Generator {
 					if(sbl > 0) sb.setCharAt(sbl, '.');
 					sb.append(" ");
 					if((MAX_LENGTH - sb.length()) > MINCHAR){
-						first = null;
-						second = corpus.getRandomStartWord()+"$";
+						first = "";
+						second = "";
+						third = corpus.getRandomStartWord()+"$";
 					}else looping = false;
 				}
 			}
