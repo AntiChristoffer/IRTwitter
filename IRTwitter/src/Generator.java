@@ -17,12 +17,11 @@ public class Generator {
 		sb = new StringBuilder();
 	}
 
-	public void createSentence(String start){
+	public String createSentence(){
 		sb.setLength(0);
 		LinkedList<NGram> ngrams = new LinkedList<NGram>();
-
-		Iterator<String> listIt = corpus.bigrams.keySet().iterator();
-		start = listIt.next();
+		//Iterator<String> listIt = corpus.bigrams.keySet().iterator();
+		//start = listIt.next();
 		String first = "";
 		String second = corpus.getRandomStartWord()+"$";
 		int andCount = 0;
@@ -60,13 +59,13 @@ public class Generator {
 					sb.append(" ");
 					if((MAX_LENGTH - sb.length()) > MINCHAR){
 						first = null;
-						second = listIt.next(); //TODO second = one of valid startwords
+						second = corpus.getRandomStartWord()+"$";
 					}else looping = false;
 				}
 			}
 
 		}
-		System.out.println(sb.toString());
+		return sb.toString();
 	}
 
 

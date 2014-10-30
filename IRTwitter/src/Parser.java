@@ -40,8 +40,9 @@ public class Parser {
 			//Push each massage to messages
 			String tempString = br.readLine();
 			while(tempString != null){
-				String[] tempStringArray = tempString.split("\",\"");
-				messages.addLast(tempStringArray[5].substring(0, tempStringArray[5].length()-1));
+				if(tempString.length()>40){
+					messages.addLast(tempString.substring(20, tempString.length()-20));
+				}
 				tempString = br.readLine();
 			}
 
@@ -52,7 +53,9 @@ public class Parser {
 				int start = sentenceIterator.first();
 				int end = sentenceIterator.next();
 				while(end != BreakIterator.DONE){
-					sentences.add(message.substring(start,end).split(REGEX_SENTENCE_SPLIT));
+					String[] sentence = message.substring(start,end).split(REGEX_SENTENCE_SPLIT);
+					//System.out.println(message.substring(start,end));
+					sentences.add(sentence);
 					start=end;
 					end=sentenceIterator.next();
 				}
@@ -61,6 +64,8 @@ public class Parser {
 		} catch(FileNotFoundException e){
 			System.out.println("Exception! " + e);
 		}
+
+		System.out.println("PARSED FILES");
 	}
 
 	public HashMap<String, LinkedList<NGram>> getNGrams(int order){
@@ -98,6 +103,7 @@ public class Parser {
 		while(listIt.hasNext()){
 			Collections.sort(nGrams.get(listIt.next()));
 		}
+		System.out.println("CREATED NGRAMS OF ORDER "+order);
 		return nGrams;
 	}
 

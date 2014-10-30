@@ -14,26 +14,20 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String fileToRead = "../data/testdata.manual.2009.06.14.csv";
-
+		String fileToRead = "../data/test_set_tweets.mini.txt";
 
 		Corpus c = new Corpus(new Parser(fileToRead));
+
+		System.out.println("CORPUS CREATED");
+
 		Generator g = new Generator(c);
 
-		g.createSentence("No$");
 
-
-		/**
-		Iterator<String> bit = bi.keySet().iterator();
-		while(bit.hasNext()){
-			LinkedList<NGram> tempList = bi.get(bit.next());
-			System.out.print("Key: "+tempList.getFirst().getKey() + ", [");
-			for(NGram n: tempList){
-				System.out.print("{Next: " + n.getNext() + ", weight: "+ n.getWeight()+"}, ");
-			}
-			System.out.println("]");
+		for(int i = 0; i < 500; i++){
+			String gs = g.createSentence();
+			System.out.println(gs);
 		}
-		*/
+
 	}
 
 }
