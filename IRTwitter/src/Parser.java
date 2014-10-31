@@ -58,7 +58,7 @@ public class Parser {
 				int end = sentenceIterator.next();
 				while(end != BreakIterator.DONE){
 					String[] sentence = message.substring(start,end).split(Constants.REGEX_SENTENCE_SPLIT);
-					if(sentence.length > 0){
+					if(sentence.length > 1){
 						startwords.addLast(sentence[0]);
 						for(int i = 0; i < sentence.length; i++){
 							if(sentence[i].startsWith("@")){
