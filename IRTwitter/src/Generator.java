@@ -10,7 +10,6 @@ public class Generator {
 	private final int MAX_LENGTH = 100;
 	private final int MINCHAR = 60;
 	private Corpus corpus;
-	//private StringBuilder sb;
 	private ArrayList<NGram> message;
 	private Random rnd;
 
@@ -71,8 +70,10 @@ public class Generator {
 				default:{
 					andCount = 0;
 					if(messageLength > 0){
-						message.add(new NGram(". "));
-						messageLength += 2;
+						NGram tmp = new NGram(". ");
+						tmp.setWeight(2);
+						message.add(tmp);
+						messageLength += tmp.getWeight();
 					}
 					
 					if((MAX_LENGTH - messageLength) > MINCHAR){
