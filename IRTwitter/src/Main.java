@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Collections;
 /**
  *
  * @author Tryti
@@ -15,7 +16,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String fileToRead = "./data/test_set_tweets.mini.txt";
+		String fileToRead = "../data/test_set_tweets.mini.txt";
 
 		Corpus c = new Corpus(new Parser(fileToRead));
 
@@ -23,11 +24,18 @@ public class Main {
 
 		Generator g = new Generator(c);
 
-
+		ArrayList<Result> results = new ArrayList<Result>();
 		for(int i = 0; i < 500; i++){
 			Result r = g.createSentence();
-			System.out.println(r.getMessage());
-			System.out.println();
+			results.add(r);
+		}
+
+		Collections.sort(results);
+
+		for(int i = 0; i < 10; i++){
+			System.out.println("-----------------");
+			System.out.println("Weight: " + results.get(i).getWeight());
+			System.out.println(results.get(i).getMessage());
 		}
 
 	}
