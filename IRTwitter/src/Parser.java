@@ -20,12 +20,17 @@ import java.text.BreakIterator;
 public class Parser {
 
 	private LinkedList<String[]> sentences;
-	private String filePath;
-	private String[] userNames;
+	private LinkedList<String> usernames;
+	private LinkedList<String> hashtags;
+	private LinkedList<String> startwords;
 
+	private String filePath;
 
 	public Parser(String inputFile) throws IOException{
 		filePath = inputFile;
+		usernames = new LinkedList<String>();
+		hashtags = new LinkedList<String>();
+		startwords = new LinkedList<String>();
 		parseFile();
 	}
 
@@ -53,11 +58,21 @@ public class Parser {
 				int end = sentenceIterator.next();
 				while(end != BreakIterator.DONE){
 					String[] sentence = message.substring(start,end).split(Constants.REGEX_SENTENCE_SPLIT);
-					//TODO add for loop to improve sentence stuff
-					for(String word: sentence){
-						
+					if(sentence.length > 0){
+						startwords.addLast(sentence[0]);
+						for(int i = 0; i < sentence.length; i++){
+							if(sentence[i].startsWith("@")){
+								usernames.addLast(sentence[i]);
+								sentence[i] = Constants.USERNAME;
+							}else if(sentence[i].startsWith("#")){
+								hashtags.addLast(sentence[i]);
+								sentence[i] = Constants.HASHTAG;
+							}else{
+								sentence[i] = sentence[i].toLowerCase();
+							}
+						}
+						sentences.add(sentence);
 					}
-					sentences.add(sentence);
 					start=end;
 					end=sentenceIterator.next();
 				}
@@ -110,21 +125,16 @@ public class Parser {
 		return nGrams;
 	}
 
-	public String[] getStartWords(){
-		String[] sw = new String[sentences.size()];
-		Iterator<String[]> it = sentences.iterator();
-		int index = 0;
-		while(it.hasNext()){//For each sentence
-			String[] sentence = it.next();
-			if(sentence.length > 0){
-				sw[index++] = sentence[0];
-			}
-		}
-		return sw;
+	public LinkedList<String> getStartWords(){
+		return startwords;
 	}
 
-	public String[] getUserNames(){
-		return userNames;
+	public LinkedList<String> getUserNames(){
+		return usernames;
+	}
+
+	public LinkedList<String> getHashtags(){
+		return hashtags;
 	}
 
 	public void debugPrint(){
