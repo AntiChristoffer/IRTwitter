@@ -33,4 +33,8 @@ public class Corpus {
 	public String getRandomUserName(){
 		return "";
 	}
+
+	public String getRandomHashtag(){
+		return "";
+	}
 }
