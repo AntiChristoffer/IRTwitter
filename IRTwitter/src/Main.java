@@ -25,8 +25,8 @@ public class Main {
 
 
 		for(int i = 0; i < 500; i++){
-			ArrayList<NGram> gs = g.createSentence();
-			System.out.println(gs);
+			Result r = g.createSentence();
+			System.out.println(r.getMessage());
 			System.out.println();
 		}
 

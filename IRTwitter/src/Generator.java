@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -10,18 +9,19 @@ public class Generator {
 	private final int MAX_LENGTH = 100;
 	private final int MINCHAR = 60;
 	private Corpus corpus;
-	private ArrayList<NGram> message;
+	private StringBuilder sb;
 	private Random rnd;
 
 
 	public Generator(Corpus c){
 		corpus = c;
 		rnd = new Random();
+		sb = new StringBuilder();
 	}
 
-	public ArrayList<NGram> createSentence(){
-		int messageLength = 0;
-		message = new ArrayList<NGram>();
+	public Result createSentence(){
+		sb.setLength(0);
+		int weight = 0;
 		LinkedList<NGram> ngrams = new LinkedList<NGram>();
 
 		String first = "";
@@ -31,7 +31,9 @@ public class Generator {
 		int andCount = 0;
 		boolean looping = true;
 
-		while(messageLength < MAX_LENGTH && looping){
+
+		while(sb.length() < MAX_LENGTH && looping){
+			boolean append = true;
 			if(corpus.quadgrams.containsKey(first+second+third)){
 				ngrams = corpus.quadgrams.get(first+second+third);
 			}
@@ -59,37 +61,39 @@ public class Generator {
 					}else ngram = ngrams.getFirst();
 					
 					if(ngram.getNext().equals(Constants.HASHTAG)){
-						third = corpus.getRandomHashtag();
-						ngram = new NGram(third);
+						String tmphash = corpus.getRandomHashtag();
+						sb.append(tmphash);
+						append = false;
 						ngram.setWeight(50);
-						third += "$";
 					}
 					else if(ngram.getNext().equals(Constants.USERNAME)){
-						third = corpus.getRandomUserName();
-						ngram = new NGram(third);
+						String tmpuname = corpus.getRandomUserName();
+						sb.append(tmpuname);
+						append = false;
 						ngram.setWeight(50);
-						third += "$";
-					}else third = ngram.getNext() + "$";
+					}
+					
+					third = ngram.getNext() + "$";
 					
 					if(third.equals("and$")){
 						andCount++;
 					}
 					if(andCount < 2){
-						message.add(ngram);
-						messageLength += ngram.getNext().length();
+						if(append)sb.append(ngram.getNext());
+						weight += ngram.getWeight();
 						break;
 					}
 				}
 				default:{
 					andCount = 0;
-					if(messageLength > 0){
+					if(sb.length() > 0){
 						NGram tmp = new NGram(". ");
 						tmp.setWeight(2);
-						message.add(tmp);
-						messageLength += tmp.getWeight();
+						if(append)sb.append(tmp);
+						weight += tmp.getWeight();
 					}
 					
-					if((MAX_LENGTH - messageLength) > MINCHAR){
+					if((MAX_LENGTH - sb.length()) > MINCHAR){
 						first = "";
 						second = "";
 						third = corpus.getRandomStartWord()+"$";
@@ -98,22 +102,7 @@ public class Generator {
 			}
 
 		}
-		return message;
-	}
-
-	public int evaluate(ArrayList<NGram> message){
-		int weight = 0;
-		for(int i=0; i<message.size(); i++){
-			weight += message.get(i).getWeight();
-		}
-		return weight;
-	}
-	
-	public void printMessage(ArrayList<NGram> message){
-		StringBuilder sb = new StringBuilder();
-		for(int i=0; i<message.size(); i++){
-			sb.append(message.get(i).getNext()+" ");
-		}
-		System.out.println(sb.toString());
+		String message = sb.toString();
+		return new Result(message, weight);
 	}
 }
