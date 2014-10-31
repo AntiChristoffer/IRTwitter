@@ -1,5 +1,5 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -8,23 +8,23 @@ import java.util.Random;
  */
 public class Generator {
 	private final int MAX_LENGTH = 100;
-	private final int MINCHAR = 50;
+	private final int MINCHAR = 60;
 	private Corpus corpus;
-	private StringBuilder sb;
+	//private StringBuilder sb;
+	private ArrayList<NGram> message;
 	private Random rnd;
 
 
 	public Generator(Corpus c){
 		corpus = c;
-		sb = new StringBuilder();
 		rnd = new Random();
 	}
 
-	public String createSentence(){
-		sb.setLength(0);
+	public ArrayList<NGram> createSentence(){
+		int messageLength = 0;
+		message = new ArrayList<NGram>();
 		LinkedList<NGram> ngrams = new LinkedList<NGram>();
-		//Iterator<String> listIt = corpus.bigrams.keySet().iterator();
-		//start = listIt.next();
+
 		String first = "";
 		String second = "";
 		String third = corpus.getRandomStartWord()+"$";
@@ -32,7 +32,7 @@ public class Generator {
 		int andCount = 0;
 		boolean looping = true;
 
-		while(sb.length() < MAX_LENGTH && looping){
+		while(messageLength < MAX_LENGTH && looping){
 			if(corpus.quadgrams.containsKey(first+second+third)){
 				ngrams = corpus.quadgrams.get(first+second+third);
 			}
@@ -63,16 +63,19 @@ public class Generator {
 						andCount++;
 					}
 					if(andCount < 2){
-						sb.append(ngram.getNext() +  " ");
+						message.add(ngram);
+						messageLength += ngram.getNext().length();
 						break;
 					}
 				}
 				default:{
 					andCount = 0;
-					int sbl = sb.length()-1;
-					if(sbl > 0) sb.setCharAt(sbl, '.');
-					sb.append(" ");
-					if((MAX_LENGTH - sb.length()) > MINCHAR){
+					if(messageLength > 0){
+						message.add(new NGram(new String[]{". "}));
+						messageLength += 2;
+					}
+					
+					if((MAX_LENGTH - messageLength) > MINCHAR){
 						first = "";
 						second = "";
 						third = corpus.getRandomStartWord()+"$";
@@ -81,8 +84,22 @@ public class Generator {
 			}
 
 		}
-		return sb.toString();
+		return message;
 	}
 
-
+	public int evaluate(ArrayList<NGram> message){
+		int weight = 0;
+		for(int i=0; i<message.size(); i++){
+			weight += message.get(i).getWeight();
+		}
+		return weight;
+	}
+	
+	public void printMessage(ArrayList<NGram> message){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<message.size(); i++){
+			sb.append(message.get(i).getNext());
+		}
+		System.out.println(sb.toString());
+	}
 }
