@@ -18,7 +18,6 @@ import java.text.BreakIterator;
  * @version 2014-10-27
  */
 public class Parser {
-	private final static String REGEX_SENTENCE_SPLIT = "\\s+";
 
 	private LinkedList<String[]> sentences;
 	private String filePath;
@@ -53,8 +52,11 @@ public class Parser {
 				int start = sentenceIterator.first();
 				int end = sentenceIterator.next();
 				while(end != BreakIterator.DONE){
-					String[] sentence = message.substring(start,end).split(REGEX_SENTENCE_SPLIT);
-					//System.out.println(message.substring(start,end));
+					String[] sentence = message.substring(start,end).split(Constants.REGEX_SENTENCE_SPLIT);
+					//TODO add for loop to improve sentence stuff
+					for(String word: sentence){
+						
+					}
 					sentences.add(sentence);
 					start=end;
 					end=sentenceIterator.next();
@@ -76,8 +78,9 @@ public class Parser {
 			if(sentence.length > order + 1){//If sentence long enough for order
 				for(int i = 0; i < sentence.length-1-order; i++){//Create nGrams
 					String[] subSentence = Arrays.copyOfRange(sentence, i, i+order);
-					NGram nGram = new NGram(subSentence);
-					LinkedList<NGram> list = nGrams.get(nGram.getKey());
+					NGram nGram = new NGram(subSentence[subSentence.length-1]);
+					String key = getKey(subSentence);
+					LinkedList<NGram> list = nGrams.get(key);
 					if(list != null){
 						boolean found = false;
 						for(NGram n: list){
@@ -93,7 +96,7 @@ public class Parser {
 					}else{
 						LinkedList<NGram> newList = new LinkedList<NGram>();
 						newList.add(nGram);
-						nGrams.put(nGram.getKey(), newList);
+						nGrams.put(key, newList);
 					}
 				}
 			}
@@ -135,5 +138,14 @@ public class Parser {
 			}
 			System.out.println();
 		}
+	}
+
+	private String getKey(String[] words){
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < words.length-1; i++){
+			sb.append(words[i]);
+			sb.append(Constants.KEYSEPATOR);
+		}
+		return sb.toString();
 	}
 }

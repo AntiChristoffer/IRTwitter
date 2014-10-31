@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class Main {
 
 
 		for(int i = 0; i < 500; i++){
-			String gs = g.createSentence();
+			ArrayList<NGram> gs = g.createSentence();
 			System.out.println(gs);
 			System.out.println();
 		}

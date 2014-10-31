@@ -71,7 +71,7 @@ public class Generator {
 				default:{
 					andCount = 0;
 					if(messageLength > 0){
-						message.add(new NGram(new String[]{". "}));
+						message.add(new NGram(". "));
 						messageLength += 2;
 					}
 					
