@@ -6,8 +6,9 @@ import java.util.Random;
  * @version 2014-10-29
  */
 public class Generator {
-	private final int MAX_LENGTH = 100;
+	private final int MAX_LENGTH = 110;
 	private final int MINCHAR = 60;
+	private final int LEAST_WEIGHT = 250;
 	private Corpus corpus;
 	private StringBuilder sb;
 	private Random rnd;
@@ -55,8 +56,13 @@ public class Generator {
 					NGram ngram;
 					first = second;
 					second = third;
-					if(ngrams.size() > 3){
-						int index = rnd.nextInt(3);
+					int tmp = 0;
+					while(tmp<ngrams.size()){
+						if(ngrams.get(tmp).getWeight() > LEAST_WEIGHT) tmp++;
+						else break;
+					}
+					if(tmp > 0){
+						int index = rnd.nextInt(tmp);
 						ngram = ngrams.get(index);
 					}else ngram = ngrams.getFirst();
 
@@ -64,13 +70,13 @@ public class Generator {
 						String tmphash = corpus.getRandomHashtag();
 						sb.append(tmphash+" ");
 						append = false;
-						ngram.setWeight(50);
+						weight+=700;
 					}
 					else if(ngram.getNext().equals(Constants.USERNAME)){
 						String tmpuname = corpus.getRandomUserName();
 						sb.append(tmpuname+" ");
 						append = false;
-						ngram.setWeight(50);
+						weight+=100;
 					}
 
 					third = ngram.getNext() + "$";
@@ -92,7 +98,7 @@ public class Generator {
 						if(append){
 							sb.setCharAt(sb.length()-1, '.');
 							sb.append(" ");
-							weight += 2;
+							weight += 2500;
 						}
 					}
 

@@ -16,7 +16,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String fileToRead = "../data/test_set_tweets.mini.txt";
+		String fileToRead = "C:/Users/Sebbe/Documents/GitHub/IRTwitter/IRTwitter/data/test_set_tweets.mini.txt";
 
 		Corpus c = new Corpus(new Parser(fileToRead));
 
