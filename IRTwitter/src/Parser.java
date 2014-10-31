@@ -77,12 +77,12 @@ public class Parser {
 					end=sentenceIterator.next();
 				}
 			}
+			System.out.println("PARSED FILES");
 			br.close();
 		} catch(FileNotFoundException e){
 			System.out.println("Exception! " + e);
 		}
 
-		System.out.println("PARSED FILES");
 	}
 
 	public HashMap<String, LinkedList<NGram>> getNGrams(int order){

@@ -27,7 +27,7 @@ public class Generator {
 		String first = "";
 		String second = "";
 		String third = corpus.getRandomStartWord()+"$";
-		
+
 		int andCount = 0;
 		boolean looping = true;
 
@@ -45,7 +45,7 @@ public class Generator {
 			}
 
 			int switchval = 0;
-			
+
 			if(ngrams != null){
 				switchval = 1;
 			}
@@ -59,27 +59,27 @@ public class Generator {
 						int index = rnd.nextInt(3);
 						ngram = ngrams.get(index);
 					}else ngram = ngrams.getFirst();
-					
+
 					if(ngram.getNext().equals(Constants.HASHTAG)){
 						String tmphash = corpus.getRandomHashtag();
-						sb.append(tmphash);
+						sb.append(tmphash+" ");
 						append = false;
 						ngram.setWeight(50);
 					}
 					else if(ngram.getNext().equals(Constants.USERNAME)){
 						String tmpuname = corpus.getRandomUserName();
-						sb.append(tmpuname);
+						sb.append(tmpuname+" ");
 						append = false;
 						ngram.setWeight(50);
 					}
-					
+
 					third = ngram.getNext() + "$";
-					
+
 					if(third.equals("and$")){
 						andCount++;
 					}
 					if(andCount < 2){
-						if(append)sb.append(ngram.getNext());
+						if(append)sb.append(ngram.getNext()+" ");
 						weight += ngram.getWeight();
 						break;
 					}
@@ -89,10 +89,10 @@ public class Generator {
 					if(sb.length() > 0){
 						NGram tmp = new NGram(". ");
 						tmp.setWeight(2);
-						if(append)sb.append(tmp);
+						if(append)sb.append(tmp+" ");
 						weight += tmp.getWeight();
 					}
-					
+
 					if((MAX_LENGTH - sb.length()) > MINCHAR){
 						first = "";
 						second = "";
