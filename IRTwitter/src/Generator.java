@@ -79,18 +79,21 @@ public class Generator {
 						andCount++;
 					}
 					if(andCount < 2){
-						if(append)sb.append(ngram.getNext()+" ");
-						weight += ngram.getWeight();
+						if(append){
+							sb.append(ngram.getNext()+" ");
+							weight += ngram.getWeight();
+						}
 						break;
 					}
 				}
 				default:{
 					andCount = 0;
 					if(sb.length() > 0){
-						NGram tmp = new NGram(". ");
-						tmp.setWeight(2);
-						if(append)sb.append(tmp+" ");
-						weight += tmp.getWeight();
+						if(append){
+							sb.setCharAt(sb.length()-1, '.');
+							sb.append(" ");
+							weight += 2;
+						}
 					}
 
 					if((MAX_LENGTH - sb.length()) > MINCHAR){
