@@ -43,6 +43,7 @@ public class Generator {
 			}
 
 			int switchval = 0;
+			
 			if(ngrams != null){
 				switchval = 1;
 			}
@@ -57,7 +58,19 @@ public class Generator {
 						ngram = ngrams.get(index);
 					}else ngram = ngrams.getFirst();
 					
-					third = ngram.getNext() + "$";
+					if(ngram.getNext().equals(Constants.HASHTAG)){
+						third = corpus.getRandomHashtag();
+						ngram = new NGram(third);
+						ngram.setWeight(50);
+						third += "$";
+					}
+					else if(ngram.getNext().equals(Constants.USERNAME)){
+						third = corpus.getRandomUserName();
+						ngram = new NGram(third);
+						ngram.setWeight(50);
+						third += "$";
+					}else third = ngram.getNext() + "$";
+					
 					if(third.equals("and$")){
 						andCount++;
 					}
@@ -99,7 +112,7 @@ public class Generator {
 	public void printMessage(ArrayList<NGram> message){
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<message.size(); i++){
-			sb.append(message.get(i).getNext());
+			sb.append(message.get(i).getNext()+" ");
 		}
 		System.out.println(sb.toString());
 	}
