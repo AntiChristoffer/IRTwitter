@@ -8,7 +8,7 @@ import java.util.Random;
 public class Generator {
 	private final int MAX_LENGTH = 110;
 	private final int MINCHAR = 60;
-	private final int LEAST_WEIGHT = 250;
+	private final int LEAST_WEIGHT = 5;
 	private Corpus corpus;
 	private StringBuilder sb;
 	private Random rnd;
@@ -36,7 +36,8 @@ public class Generator {
 		while(sb.length() < MAX_LENGTH && looping){
 			boolean append = true;
 			if(corpus.quadgrams.containsKey(first+second+third)){
-				ngrams = corpus.quadgrams.get(first+second+third);
+				//ngrams = corpus.quadgrams.get(first+second+third);
+				ngrams = corpus.trigrams.get(second+third);
 			}
 			else if(corpus.trigrams.containsKey(second+third)){
 				ngrams = corpus.trigrams.get(second+third);
