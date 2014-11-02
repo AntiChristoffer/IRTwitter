@@ -1,0 +1,35 @@
+PARSED FILES
+CREATED NGRAMS OF ORDER 2
+CREATED NGRAMS OF ORDER 3
+CREATED NGRAMS OF ORDER 4
+CORPUS CREATED
+-----------------
+Weight: 12317
+rt @iflyskyhy i need to get my hair done and then finish the movie it was a good idea to go grocery shopping. 
+-----------------
+Weight: 12317
+rt @jlm2332 i need to get my hair done and then finish the movie it was a good idea to go grocery shopping. 
+-----------------
+Weight: 10768
+rt @SpoiledGrl #killyoself to #declined @MarlySays @ItsRelLMulaBabe @Prettie_Drea @RapperBigPooh: @LilGambino 
+-----------------
+Weight: 10095
+rt @kingnickrusso #Technology. if you don't know what to do with the rest of the week for his charity, jus have 
+-----------------
+Weight: 9679
+rt @MsNikkiCouture #meantforatext if you don't know what to do with the rest of the week for his charity, jus 
+-----------------
+Weight: 9233
+need to get my hair done and then finish the movie it was a good idea to go grocery shopping. 
+-----------------
+Weight: 9197
+@fivestarprodj: rt @A_Ramsey @TaSha_Cee i think i might have to get up and get ready for the weekend with the 
+-----------------
+Weight: 9111
+@WTFSexFacts: rt @FeeLeeSeeMoe #atrueboss i was a little bit of a drive by...but the person turned out to be a 
+-----------------
+Weight: 8996
+rt @ApoloOhno"If @DonteWhitner @RobertInCypress @MAV25 @DaDDiiFaB @TopNotch_Tiff: @JesCa09 @Sonja29 @buttawilly 
+-----------------
+Weight: 8996
+rt @nanaz_5445 @pauldtheripy:All @LiciaLeBeau @SodomTheMovie @DonnellAnthony @3pm @LohSki @VuhJynaSaurus @Osc182 
